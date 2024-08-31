@@ -1,0 +1,89 @@
+---
+import { Image } from 'astro:assets';
+
+import logo from '@assets/logo.svg';
+
+const textLinks: { label: string; href: string }[] = [
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+  { label: 'Projects', href: '/projects' },
+  { label: 'Stats', href: '/stats' },
+];
+
+const profileLinks: { label: string; href: string; icon: string }[] = [
+  { label: 'GitHub', href: 'https://github.com/sebdanielsson', icon: '/img/github.svg' },
+  {
+    label: 'LinkedIn',
+    href: 'https://www.linkedin.com/in/sebastiandanielsson/',
+    icon: '/img/linkedin.svg',
+  },
+  { label: 'Twitter/X', href: 'https://twitter.com/sebbo_io', icon: '/img/x.svg' },
+  { label: 'Mastodon', href: 'https://mastodon.social/@sebbo', icon: '/img/mastodon.svg' },
+];
+---
+
+<nav class="sticky top-0 z-50 bg-neutral-950 bg-opacity-70 py-4 text-white backdrop-blur">
+  <div class="main-width flex flex-row items-center justify-between gap-2">
+    <a href="/" class="flex flex-row items-center gap-3 hover:text-[var(--accent-light)]">
+      <Image
+        src={logo}
+        alt="Logo"
+        width="36"
+        height="36"
+        loading="eager"
+        class="size-6 sm:size-9"
+      />
+      <span class="hidden text-2xl font-bold sm:block sm:text-3xl">Sebbo.io</span>
+    </a>
+    <div class="flex flex-row items-center gap-2 text-sm sm:gap-6 sm:text-base">
+      {
+        textLinks.map(({ label, href }) => (
+          <a
+            aria-current={Astro.url.pathname === href}
+            class:list={[
+              'passing-underline',
+              'text-white',
+              'hover:text-white',
+              {
+                active:
+                  Astro.url.pathname === href ||
+                  (href !== '/' && Astro.url.pathname.startsWith(href)),
+              },
+            ]}
+            href={href}
+          >
+            {label}
+          </a>
+        ))
+      }
+    </div>
+    <div class="flex flex-row items-center gap-2 sm:gap-3">
+      {
+        profileLinks.map(({ label, href, icon }) => (
+          <a href={href} target="_blank" rel="noopener noreferrer">
+            <span class="sr-only">Go to my {label} profile</span>
+            <Image
+              src={icon}
+              alt={`${label} profile`}
+              width="32"
+              height="32"
+              loading="eager"
+              class="profile-icon size-5 sm:size-6 md:size-8"
+            />
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</nav>
+<style>
+  .active {
+    color: var(--accent-light);
+  }
+
+  .profile-icon:hover,
+  .profile-icon:focus {
+    filter: brightness(0) saturate(100%) invert(66%) sepia(62%) saturate(2043%) hue-rotate(213deg)
+      brightness(98%) contrast(95%);
+  }
+</style>

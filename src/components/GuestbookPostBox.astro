@@ -1,0 +1,40 @@
+---
+import { Picture } from 'astro:assets';
+
+const { post } = Astro.props;
+---
+
+<div class="post group flex flex-col gap-1">
+  <div class="fade-animation flex flex-row items-center gap-2">
+    <Picture
+      src={post.author.avatarUrl}
+      alt={post.author.login}
+      width="40"
+      height="40"
+      loading="eager"
+      formats={['avif', 'webp']}
+      fallbackFormat="webp"
+      class="rounded-full"
+    />
+    <div class="flex flex-col">
+      <a href={`https://github.com/${post.author.login}`} target="_blank" class="text-sm font-bold">
+        {post.author.login}
+      </a>
+
+      <p class="text-xs text-gray-500">{new Date(post.createdAt).toLocaleString()}</p>
+    </div>
+  </div>
+  <div>
+    <p class="handwritten text-2xl font-light">{post.body}</p>
+  </div>
+</div>
+<style>
+  .fade-animation {
+    opacity: 0;
+    transition: opacity 0.3s linear;
+  }
+
+  .group:hover .fade-animation {
+    opacity: 1;
+  }
+</style>

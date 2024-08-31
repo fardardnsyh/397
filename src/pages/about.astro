@@ -1,0 +1,28 @@
+---
+import Layout from '@layouts/Layout.astro';
+import FlippingCard from '@components/FlippingCard.astro';
+import stuffIUse from '@data/stuffIUse.json';
+---
+
+<Layout title="About">
+  <main class="main-width">
+    <h1 class="my-0">
+      <span class="text-gradient text-gradient-animation">About</span>
+    </h1>
+    <h2>Things I Use</h2>
+    <p>Here are some of the hardware, software, and tools that I use.</p>
+    <p></p>
+    <h3>Hardware</h3>
+    <div class="my-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {stuffIUse.hardware.map((item) => <FlippingCard item={item} />)}
+    </div>
+    <h3>Software</h3>
+    <div class="my-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {stuffIUse.software.map((item) => <FlippingCard item={item} />)}
+    </div>
+    <h3>Coffee</h3>
+    <div class="my-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {stuffIUse.coffee.map((item) => <FlippingCard item={item} />)}
+    </div>
+  </main>
+</Layout>
